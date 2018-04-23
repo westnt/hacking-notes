@@ -32,6 +32,7 @@ Since there are 8 bits per byte, entropy ranges from 0.0 to 8.0.
 - PeStudio - signature detection + PE viewer
 - detect it easy(DIE) - plot entropy levels.
 - disassembler: ida,binja,r2,etc.
+- binwalk - see if known file signatures are found in sample.
 
 ### Finding the Entry Point
 
