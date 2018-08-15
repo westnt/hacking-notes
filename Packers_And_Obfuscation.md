@@ -1,7 +1,7 @@
 # The Unpacking Stub
 
-The unpacking stub is loaded by the operating system apon program execution.
-Its porpouse is to unpack the program, thus it is typicaly small.
+The unpacking stub is loaded by the operating system upon program execution.
+Its purpose is to unpack the program, thus it is typicaly small.
 
 Jobs of the Unpacking Stub:
 - unpack the original executable into memory
