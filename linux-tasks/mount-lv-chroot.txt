@@ -1,0 +1,66 @@
+notes on how to mount directories and lv volumes,
+get network access and chroot
+
+/*-------------------------For logical volumes--------------------------*/
+#Ok heres how to start if you boot with a disk that has lvm2 tools you can mount the logical #volumes
+#I used slax-5.0.5 with lvm2 module I had to do the following commands
+
+#load device module
+modprobe dm-mod
+
+#change the volumes that exist to active
+vgchange -ay
+
+#mount the logical partition
+mkdir -p /mnt/VolGroup00/LogVol00
+mount /dev/VolGroup00/LogVol00 /mnt/VolGroup00/LogVol00
+
+#to see what the status of the lv drive is:
+lvscan
+#output will look somthing like this
+#inactive '/dev/VolGroup00/LogVol00' [26.06 GB] inherit
+#inactive '/dev/VolGroup00/LogVol01' [1.75 GB] inherit
+
+/*------------------------how to mount and chroot-------------------------*/
+sudo mount /dev/sda1 /mnt
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+sudo chroot /mnt                 #to exit chroot type 'exit' in terminal
+
+#for logical volumes
+sudo mount /dev/fedora/root /mnt
+sudo mount /dev/fedora/home /mnt/home
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+sudo chroot /mnt                #to exit chroot type 'exit' in terminal
+
+/*---------------------how to exit chroot and umount---------------------*/
+exit
+sudo umount /mnt/dev
+sudo umount /mnt/proc
+sudo umount /mnt/home
+sudo umount /mnt
+
+/*--------------------------to get network access------------------------*/
+#Add OpenDNS name servers to your /etc/resolv.conf to
+#access the network after chroot:
+nameserver 208.67.222.222
+nameserver 208.67.220.220
+/*---------------------------repairing grub------------------------------*/
+fdisk -l
+mount /dev/sda1 /mnt/
+mount -t proc none /mnt/proc
+mount -o bind /dev /mnt/dev
+mount -t sysfs sys /mnt/sys
+chroot /mnt/ /bin/bash
+update-grub
+/usr/sbin/grub-install --recheck --no-floppy /dev/sda
+sync & reboot
+
+#if grub complains "this GPT partition label contains no BIOS Boot Partition" 
+#you need to make a boot partition starting on sector 1. 
+#Make it 550 MB (think it can be much smaller, but im playing it safe), fs=unformated with the bios_grub flag
+#use gparted from a livecd or gparted or similar.
+
