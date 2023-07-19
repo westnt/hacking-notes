@@ -1,2 +1,2 @@
-# RE-NOTES
-Reverse Engineering Notes
+# hacking-notes
+Place where I keep notes related to hacking...
