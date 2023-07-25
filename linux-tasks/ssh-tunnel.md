@@ -7,7 +7,7 @@ solution: ssh tunneing!
 
 from the attacker machine, we can establish an ssh connection to the server and tunnel the service back to us.
 ```bash
-attacker$ ssh -N user@server -P 8888:localhost:8080
+attacker$ ssh -N user@server -L 8888:localhost:8080
 ```
 this establishes ssh connection from attacker to server. The -P says forward to port 8888 on the attacker machine, the service beining served at locahost:8080 from the server.
 
@@ -18,9 +18,9 @@ attacker$ wget localhost:8888
 
 Note that
 ```bash
-attacker$ ssh -N user@server -P 8888:localhost:8080
+attacker$ ssh -N user@server -L 8888:localhost:8080
 ```
 is shorthand for
 ```bash
-attacker$ ssh -N user@server -P 8888:localhost:localhost:8080
+attacker$ ssh -N user@server -L 8888:localhost:localhost:8080
 ```
