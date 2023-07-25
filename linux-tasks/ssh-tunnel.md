@@ -15,3 +15,12 @@ now, from the attacker machine, we can access the service on port 8888
 ```bash
 attacker$ wget localhost:8888
 ```
+
+Note that
+```bash
+attacker$ ssh -N user@server -P 8888:localhost:8080
+```
+is shorthand for
+```bash
+attacker$ ssh -N user@server -P 8888:localhost:localhost:8080
+```
